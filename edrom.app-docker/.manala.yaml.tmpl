@@ -1,0 +1,64 @@
+{{- with .Vars.system -}}
+
+####################################################################
+# !!! REMINDER !!!                                                 #
+# Don't forget to run `manala up` each time you update this file ! #
+####################################################################
+
+manala:
+    recipe: edrom.app-docker
+    repository: https://github.com/RomulusED69/manala-recipes.git
+
+##########
+# System #
+##########
+
+system:
+    app_name: {{ .app_name | toYaml }}
+    timezone: Etc/UTC
+
+    php:
+        configs:
+            # XDebug
+            - config: |
+                ; Comment/uncomment the following lines to disable/enable XDebug
+                ;zend_extension=xdebug.so
+                ;xdebug.remote_enable=1
+                ;xdebug.remote_autostart=1
+
+            # App
+            - config: |
+                ;App specific configuration
+
+    {{- if .mariadb.version }}
+    mariadb:
+        version: {{ .mariadb.version | toYaml }}
+        init: |
+            CREATE DATABASE IF NOT EXISTS `app_test`;
+            GRANT ALL ON `app_test`.* TO 'app'@'%';
+    {{- end }}
+
+    {{- if .mysql.version }}
+    mysql:
+        version: {{ .mysql.version | toYaml }}
+        init: |
+            CREATE DATABASE IF NOT EXISTS `app_test`;
+            GRANT ALL ON `app_test`.* TO 'app'@'%';
+    {{- end }}
+
+    {{- if .postgresql.version }}
+    postgresql:
+        version: {{ .postgresql.version | toYaml }}
+    {{- end }}
+
+    {{- if .redis.version }}
+    redis:
+        version: {{ .redis.version | toYaml }}
+    {{- end }}
+
+    {{- if .mongo.version }}
+    mongo:
+        version: {{ .mongo.version | toYaml }}
+    {{- end }}
+
+{{- end }}

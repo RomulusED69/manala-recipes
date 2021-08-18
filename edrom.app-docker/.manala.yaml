@@ -1,0 +1,50 @@
+manala:
+  description: EDRom - Generic application using Docker
+  template: .manala.yaml.tmpl
+  sync:
+    - .manala/
+    - docker-compose.yaml.tmpl
+    - php.ini.tmpl
+
+system:
+  # @option {"label": "App name (in kebab-case)"}
+  # @schema {"type": "string"}
+  app_name: ~
+  # @schema {"type": ["string"], "pattern": "^[a-zA-Z]+/[a-zA-Z]+$"}
+  timezone: Etc/UTC
+  php:
+    # @schema {
+    #     "items": {"type": "object",
+    #         "additionalProperties": false,
+    #         "properties": {
+    #             "config": {"type": ["object", "string", "array"]}
+    #         }
+    #     }
+    # }
+    configs: []
+  mariadb:
+    # @option {"label": "MariaDB version"}
+    # @schema {"enum": [null, 10.5, 10.4, 10.3, 10.2, 10.1, "10.0"]}
+    version: ~
+    # @schema {"type": ["string", "null"]}
+    init: ~
+  mysql:
+    # @option {"label": "MySQL version"}
+    # @schema {"enum": [null, 5.7, 8, "8.0"]}
+    version: ~
+    # @schema {"type": ["string", "null"]}
+    init: ~
+  postgresql:
+    # @option {"label": "PostgreSQL version"}
+    # @schema {"enum": [null, 13, 12, 11, 10, 9.6]}
+    version: ~
+  redis:
+    # @option {"label": "Redis version"}
+    # @schema {"enum": [null, "*"]}
+    version: ~
+    # @schema {"type": ["object", "array"]}
+    config: { }
+  mongo:
+    # @option {"label": "MongoDB version"}
+    # @schema {"enum": [null, "3.6", "4"]}
+    version: ~
